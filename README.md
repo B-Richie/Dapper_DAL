@@ -1,3 +1,8 @@
 # Dapper_DAL
-Data Access Layer
-test
+    Multi-Provider Data Access Layer using Dapper
+    Reference in any client application
+
+BaseService.cs
+    
+  
+
