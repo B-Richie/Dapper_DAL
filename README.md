@@ -1,6 +1,6 @@
 # Dapper_DAL
-    Multi-provider IOC data access layer using Dapper
-    	Reference in any client application
+	Multi-provider IOC data access layer using Dapper
+	Reference in any client application
 	
 How It Works:
 
