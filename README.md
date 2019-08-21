@@ -25,3 +25,15 @@
 				    sql.dbConnection.ConnectionString = sql.ConnectionString;
 				    sql.Guid = Guid.NewGuid();
 				});
+				
+				
+	Client Startup.cs implementation example:
+		 public IConfiguration Configuration { get; }
+       
+		public void ConfigureServices(IServiceCollection services)
+		{
+		   ...   
+		    services.AddConnectionStrings(Configuration);
+		   ...
+		}
+		
