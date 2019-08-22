@@ -96,6 +96,8 @@ MS SQL and Oracle are the two providers currently in use. To add additional data
 			    lite.dbConnection.ConnectionString = lite.ConnectionString;
 			    lite.Guid = Guid.NewGuid();	--DI demostration purposes only					
 			{);
+			
+		 }
 				
 				
 Client Startup.cs implementation example (See the Core_Dapper repo for a full example):
