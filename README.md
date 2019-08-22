@@ -1,15 +1,18 @@
 # Dapper Data Access Layer
-	Multi-provider IOC data access layer using Dapper
-	Reference in any client application
+Multi-provider IOC data access layer using Dapper
+
+Reference in any client application
 	
-How It Works:
+# How It Works:
 
-	BaseService.cs
-		Abstract class implementing Dapper database commands. An abstract IDbConnection property is passed in containing the provider and connection string to your database of choice. You will have the ability to use multiple providers or multiple connection strings from the same provider for a single request! Inherit this class within your cleint's service layer.
+BaseService.cs
+
+Abstract class implementing Dapper database commands. An abstract IDbConnection property is passed in containing the provider and connection string to your database of choice. You will have the ability to use multiple providers or multiple connection strings from the same provider for a single request! Inherit this class within your cleint's service layer.
 
 
-	ConnectionStringConfiguration.cs
-		Static middleware component for setting the connection strings for each provider. The IOptions interface is used to map the appsettings.json database connection section from the client:
+ConnectionStringConfiguration.cs
+
+Static middleware component for setting the connection strings for each provider. The IOptions interface is used to map the appsettings.json database connection section from the client:
 		
 			services.AddTransient(resolver =>
 			    {
