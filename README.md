@@ -66,7 +66,28 @@ How It Works:
 				services.AddTransient<IDbConnection, SqliteConnection>();
 				
 			-Resolve the DbConnection for Sqlite
-				
+				services.AddTransient(resolver =>
+			    {
+				var databaseConnections = resolver.GetService<IOptions<DatabaseConnections>>().Value;
+				var iDbConnections = resolver.GetServices<IDbConnection>();
+				databaseConnections.OracleConnections.ToList().ForEach(ora =>
+				{
+				    ora.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(OracleConnection)).FirstOrDefault();
+				    ora.dbConnection.ConnectionString = ora.ConnectionString;
+				    ora.Guid = Guid.NewGuid();
+				});
+				databaseConnections.MSSqlConnections.ToList().ForEach(sql =>
+				{
+				    sql.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(SqlConnection)).FirstOrDefault();
+				    sql.dbConnection.ConnectionString = sql.ConnectionString;
+				    sql.Guid = Guid.NewGuid();
+				});
+				databaseConnections.SqliteConnections.ToList().ForEach(lite =>
+				{
+				    lite.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(SqliteConnection)).FirstOrDefault();
+				    lite.dbConnection.ConnectionString = lite.ConnectionString;
+				    lite.Guid = Guid.NewGuid();	--DI demostration purposes only					
+				{);
 				
 				
 	Client Startup.cs implementation example:
