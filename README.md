@@ -1,4 +1,4 @@
-# Dapper Data Access Layer
+# Dapper Data Access Layer for ASP Core 2.2
 Multi-provider IOC data access layer using Dapper
 
 Reference in any client application
