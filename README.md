@@ -1,4 +1,4 @@
-# Dapper_DAL
+# Dapper Data Access Layer
 	Multi-provider IOC data access layer using Dapper
 	Reference in any client application
 	
