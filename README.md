@@ -37,7 +37,30 @@ How It Works:
 				public IEnumerable<Connection> SqliteConnections {get; set; }
 				
 			-Don't forget to add your Sqlite connection string(s) to the appsettings.json file in your client app
-				
+				"DatabaseConnections": {
+				    "OracleConnections": [
+				      {
+					"Alias": "Optional",        
+					"ConnectionString": "Required"
+				      },
+				      {
+					"Alias": "Optional",        
+					"ConnectionString": "Required"
+				      }
+				    ],
+				    "MSSqlConnections": [
+				      {
+					"Alias": "Optional",        
+					"ConnectionString": "Required"
+				      }
+				    ],
+				    "SqliteConnections" [
+				      {
+				      	"Alias": "Optional",
+					"ConnectionString": "Required"
+				      }
+				    ]
+				  }
 				
 			-Inject the SqliteConnection into the service container
 				services.AddTransient<IDbConnection, SqliteConnection>();
