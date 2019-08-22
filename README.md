@@ -31,70 +31,76 @@ Static middleware component for setting the connection strings for each provider
 				    sql.Guid = Guid.NewGuid();
 				});
 				
-		MS SQL and Oracle are the two providers currently in use. To add additional database providers, such as Sqlite, do the following:
-			-Install Microsoft.EntityFrameworkCore.Sqlite via Nuget
+MS SQL and Oracle are the two providers currently in use. To add additional database providers, such as Sqlite, do the following:
+
+-Install Microsoft.EntityFrameworkCore.Sqlite via Nuget
 			
-			-Add the class list to DatabaseConnections.cs
-				public IEnumerable<Connection> OracleConnections { get; set; }
-        			public IEnumerable<Connection> MSSqlConnections { get; set; }
-				public IEnumerable<Connection> SqliteConnections {get; set; }
+-Add the class list to DatabaseConnections.cs
+
+			public IEnumerable<Connection> OracleConnections { get; set; }
+			public IEnumerable<Connection> MSSqlConnections { get; set; }
+			public IEnumerable<Connection> SqliteConnections {get; set; }
 				
-			-Don't forget to add your Sqlite connection string(s) to the appsettings.json file in your client app
-				"DatabaseConnections": {
-				    "OracleConnections": [
-				      {
-					"Alias": "Optional",        
-					"ConnectionString": "Required"
-				      },
-				      {
-					"Alias": "Optional",        
-					"ConnectionString": "Required"
-				      }
-				    ],
-				    "MSSqlConnections": [
-				      {
-					"Alias": "Optional",        
-					"ConnectionString": "Required"
-				      }
-				    ],
-				    "SqliteConnections" [
-				      {
-				      	"Alias": "Optional",
-					"ConnectionString": "Required"
-				      }
-				    ]
-				  }
+-Don't forget to add your Sqlite connection string(s) to the appsettings.json file in your client app
+
+			"DatabaseConnections": {
+			    "OracleConnections": [
+			      {
+				"Alias": "Optional",        
+				"ConnectionString": "Required"
+			      },
+			      {
+				"Alias": "Optional",        
+				"ConnectionString": "Required"
+			      }
+			    ],
+			    "MSSqlConnections": [
+			      {
+				"Alias": "Optional",        
+				"ConnectionString": "Required"
+			      }
+			    ],
+			    "SqliteConnections" [
+			      {
+				"Alias": "Optional",
+				"ConnectionString": "Required"
+			      }
+			    ]
+			  }
 				
-			-Inject the SqliteConnection into the service container
-				services.AddTransient<IDbConnection, SqliteConnection>();
+-Inject the SqliteConnection into the service container
+
+			services.AddTransient<IDbConnection, SqliteConnection>();
 				
-			-Resolve the DbConnection for Sqlite
-				services.AddTransient(resolver =>
-			    {
-				var databaseConnections = resolver.GetService<IOptions<DatabaseConnections>>().Value;
-				var iDbConnections = resolver.GetServices<IDbConnection>();
-				databaseConnections.OracleConnections.ToList().ForEach(ora =>
-				{
-				    ora.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(OracleConnection)).FirstOrDefault();
-				    ora.dbConnection.ConnectionString = ora.ConnectionString;
-				    ora.Guid = Guid.NewGuid();
-				});
-				databaseConnections.MSSqlConnections.ToList().ForEach(sql =>
-				{
-				    sql.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(SqlConnection)).FirstOrDefault();
-				    sql.dbConnection.ConnectionString = sql.ConnectionString;
-				    sql.Guid = Guid.NewGuid();
-				});
-				databaseConnections.SqliteConnections.ToList().ForEach(lite =>
-				{
-				    lite.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(SqliteConnection)).FirstOrDefault();
-				    lite.dbConnection.ConnectionString = lite.ConnectionString;
-				    lite.Guid = Guid.NewGuid();	--DI demostration purposes only					
-				{);
+-Resolve the DbConnection for Sqlite
+
+			services.AddTransient(resolver =>
+		    {
+			var databaseConnections = resolver.GetService<IOptions<DatabaseConnections>>().Value;
+			var iDbConnections = resolver.GetServices<IDbConnection>();
+			databaseConnections.OracleConnections.ToList().ForEach(ora =>
+			{
+			    ora.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(OracleConnection)).FirstOrDefault();
+			    ora.dbConnection.ConnectionString = ora.ConnectionString;
+			    ora.Guid = Guid.NewGuid();
+			});
+			databaseConnections.MSSqlConnections.ToList().ForEach(sql =>
+			{
+			    sql.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(SqlConnection)).FirstOrDefault();
+			    sql.dbConnection.ConnectionString = sql.ConnectionString;
+			    sql.Guid = Guid.NewGuid();
+			});
+			databaseConnections.SqliteConnections.ToList().ForEach(lite =>
+			{
+			    lite.dbConnection = iDbConnections.Where(w => w.GetType() == typeof(SqliteConnection)).FirstOrDefault();
+			    lite.dbConnection.ConnectionString = lite.ConnectionString;
+			    lite.Guid = Guid.NewGuid();	--DI demostration purposes only					
+			{);
 				
 				
-	Client Startup.cs implementation example:
-		 public IConfiguration Configuration { get; }
+Client Startup.cs implementation example:
+
+		public IConfiguration Configuration { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
