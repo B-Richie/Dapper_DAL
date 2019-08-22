@@ -29,13 +29,13 @@ How It Works:
 				});
 				
 				
-		Client Startup.cs implementation example:
-			 public IConfiguration Configuration { get; }
+	Client Startup.cs implementation example:
+		 public IConfiguration Configuration { get; }
 
-			public void ConfigureServices(IServiceCollection services)
-			{
-			   ...   
-			    services.AddConnectionStrings(Configuration);
-			   ...
-			}
+		public void ConfigureServices(IServiceCollection services)
+		{
+		   ...   
+		    services.AddConnectionStrings(Configuration);
+		   ...
+		}
 		
