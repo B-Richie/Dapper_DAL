@@ -5,7 +5,7 @@
 How It Works:
 
 	BaseService.cs
-		Abstract class implementing Dapper database commands. An abstract IDbConnection property is passed in containing the provider and connection string to your database of choice. You will have the ability to use multiple providers or multiple connection strings from the same provider for a single request! Inherit this class within your service layer.
+		Abstract class implementing Dapper database commands. An abstract IDbConnection property is passed in containing the provider and connection string to your database of choice. You will have the ability to use multiple providers or multiple connection strings from the same provider for a single request! Inherit this class within your cleint's service layer.
 
 
 	ConnectionStringConfiguration.cs
