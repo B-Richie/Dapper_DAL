@@ -5,7 +5,7 @@
 How It Works:
 
 	BaseService.cs
-		Abstract class implementing Dapper database commands. An abstract IDbConnection property is passed in containing the provider and connection string to your database of choice. Inherit this class within your service layer.
+		Abstract class implementing Dapper database commands. An abstract IDbConnection property is passed in containing the provider and connection string to your database of choice. You will have the ability to use multiple providers or multiple connection strings from the same provider for a single request! Inherit this class within your service layer.
 
 
 	ConnectionStringConfiguration.cs
@@ -27,6 +27,23 @@ How It Works:
 				    sql.dbConnection.ConnectionString = sql.ConnectionString;
 				    sql.Guid = Guid.NewGuid();
 				});
+				
+		MS SQL and Oracle are the two providers currently in use. To add additional database providers, such as Sqlite, do the following:
+			-Install Microsoft.EntityFrameworkCore.Sqlite via Nuget
+			
+			-Add the class list to DatabaseConnections.cs
+				public IEnumerable<Connection> OracleConnections { get; set; }
+        			public IEnumerable<Connection> MSSqlConnections { get; set; }
+				public IEnumerable<Connection> SqliteConnections {get; set; }
+				
+			-Don't forget to add your Sqlite connection string(s) to the appsettings.json file in your client app
+				
+				
+			-Inject the SqliteConnection into the service container
+				services.AddTransient<IDbConnection, SqliteConnection>();
+				
+			-Resolve the DbConnection for Sqlite
+				
 				
 				
 	Client Startup.cs implementation example:
