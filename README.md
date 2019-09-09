@@ -30,6 +30,7 @@ Static middleware component for setting the connection strings for each provider
 		    sql.dbConnection.ConnectionString = sql.ConnectionString;
 		    sql.Guid = Guid.NewGuid();
 		});
+	   }
 				
 MS SQL and Oracle are the two providers currently in use. To add additional database providers, such as Sqlite, do the following:
 
